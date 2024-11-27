@@ -8,3 +8,7 @@ body {
   background-color: #1b1b1d;
   font: "#fff";
 }
+
+.clients-list {
+  height: 100vh;
+}
