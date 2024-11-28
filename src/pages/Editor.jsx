@@ -1,8 +1,8 @@
 import { useState } from "react";
-import UserPanel from "./UserPanel";
-import AlertMessage from "./AlertMessage";
+import UserPanel from "../components/UserPanel";
+import AlertMessage from "../components/AlertMessage";
 
-export default function EditorPage() {
+export default function Editor() {
   const [show, setShow] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertVariant, setAlertVariant] = useState("light");
