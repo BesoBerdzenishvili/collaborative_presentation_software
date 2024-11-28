@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import AlertMessage from "./AlertMessage";
+import AlertMessage from "../components/AlertMessage";
 
-const HomePage = () => {
+const Home = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -69,4 +69,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
