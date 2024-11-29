@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const Tools = ({
@@ -12,17 +12,14 @@ const Tools = ({
   handleZoomIn,
 }) => {
   const renderTooltip = (message) => <Tooltip>{message}</Tooltip>;
-  // remove comments
   return (
     <div className="d-flex align-items-center justify-content-around p-3 border">
-      {/* Add Text */}
       <OverlayTrigger placement="bottom" overlay={renderTooltip("Add Text")}>
         <button className="btn btn-primary" onClick={addText}>
           Add Text
         </button>
       </OverlayTrigger>
 
-      {/* Fill - Color Pickers */}
       <div className="d-flex align-items-center text-light">
         <label className="me-2">Color</label>
         <input
@@ -32,7 +29,6 @@ const Tools = ({
         />
       </div>
 
-      {/* Zoom In/Out */}
       <div className="d-flex align-items-center">
         <OverlayTrigger placement="bottom" overlay={renderTooltip("Zoom In")}>
           <button className="btn btn-secondary mx-1" onClick={handleZoomIn}>
@@ -46,7 +42,6 @@ const Tools = ({
         </OverlayTrigger>
       </div>
 
-      {/* Undo/Redo */}
       <div className="d-flex align-items-center">
         <OverlayTrigger placement="bottom" overlay={renderTooltip("Undo")}>
           <button className="btn btn-warning mx-1">Undo</button>
@@ -56,7 +51,6 @@ const Tools = ({
         </OverlayTrigger>
       </div>
 
-      {/* Shapes - Rect, Circle, Star */}
       <div className="d-flex align-items-center">
         <OverlayTrigger placement="bottom" overlay={renderTooltip("Rectangle")}>
           <button className="btn btn-outline-success mx-1" onClick={addRect}>
@@ -75,7 +69,6 @@ const Tools = ({
         </OverlayTrigger>
       </div>
 
-      {/* Add New Slide */}
       <OverlayTrigger
         placement="bottom"
         overlay={renderTooltip("Add New Slide")}
@@ -85,7 +78,6 @@ const Tools = ({
         </button>
       </OverlayTrigger>
 
-      {/* Present Mode */}
       <OverlayTrigger
         placement="bottom"
         overlay={renderTooltip("Present Mode")}
@@ -95,7 +87,6 @@ const Tools = ({
         </button>
       </OverlayTrigger>
 
-      {/* Export as PDF */}
       <OverlayTrigger
         placement="bottom"
         overlay={renderTooltip("Export as PDF")}

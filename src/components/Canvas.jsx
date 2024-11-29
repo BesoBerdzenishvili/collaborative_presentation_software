@@ -4,14 +4,8 @@ import Shape from "./Shape";
 
 const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
   const tools = [...Object.keys(shapes)];
-  // const [st, setSt] = useState({
-  //   isDragging: false,
-  //   x: 50,
-  //   y: 50,
-  // });
 
   return (
-    // if present mode make these 100% and max zindex or smt else to overlay
     <Stage
       width={window.innerWidth / 1.3333}
       height={window.innerHeight}
@@ -23,7 +17,16 @@ const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
         {tools.map((i) => {
           return shapes[i].map((j) => {
             return (
-              <Shape key={j.id} shape={j} element={i} onClick={setSelectedId} />
+              <Shape
+                key={j.id}
+                shape={j}
+                element={i}
+                onMouseDown={setSelectedId}
+                x={j.x}
+                y={j.y}
+                fill={j.fill}
+                draggable
+              />
             );
           });
         })}
