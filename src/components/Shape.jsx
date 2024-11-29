@@ -2,27 +2,6 @@ import React from "react";
 import { Star, Rect, Text, Circle } from "react-konva";
 
 export default function Shape({ shape, element, onClick }) {
-  // const handleDragStart = (e) => {
-  //   const id = e.target.id();
-  //   setStars(
-  //     stars.map((star) => {
-  //       return {
-  //         ...star,
-  //         isDragging: star.id === id,
-  //       };
-  //     })
-  //   );
-  // };
-  // const handleDragEnd = (e) => {
-  //   setStars(
-  //     stars.map((star) => {
-  //       return {
-  //         ...star,
-  //         isDragging: false,
-  //       };
-  //     })
-  //   );
-  // }
   const click = { onClick: () => onClick(shape.id) };
   switch (element) {
     // assign dry props from props as ...restProps

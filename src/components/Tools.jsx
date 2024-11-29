@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
-const Tools = ({ addStar, addCircle, addRect, addText, changeColor }) => {
+const Tools = ({
+  addStar,
+  addCircle,
+  addRect,
+  addText,
+  changeColor,
+  handleExportPDF,
+}) => {
   const renderTooltip = (message) => <Tooltip>{message}</Tooltip>;
   // remove comments
   return (
@@ -87,7 +94,9 @@ const Tools = ({ addStar, addCircle, addRect, addText, changeColor }) => {
         placement="bottom"
         overlay={renderTooltip("Export as PDF")}
       >
-        <button className="btn btn-danger">Export as PDF</button>
+        <button className="btn btn-danger" onClick={handleExportPDF}>
+          Export as PDF
+        </button>
       </OverlayTrigger>
     </div>
   );

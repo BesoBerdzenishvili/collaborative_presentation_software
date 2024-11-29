@@ -2,7 +2,7 @@ import React from "react";
 import { Stage, Layer } from "react-konva";
 import Shape from "./Shape";
 
-const Canvas = ({ shapes, setSelectedId }) => {
+const Canvas = ({ shapes, setSelectedId, refer }) => {
   const tools = [...Object.keys(shapes)];
   // const [st, setSt] = useState({
   //   isDragging: false,
@@ -13,7 +13,11 @@ const Canvas = ({ shapes, setSelectedId }) => {
   return (
     // if present mode make these 100% and max zindex or smt else to overlay
 
-    <Stage width={window.innerWidth / 2} height={window.innerHeight}>
+    <Stage
+      width={window.innerWidth / 2}
+      height={window.innerHeight}
+      ref={refer}
+    >
       <Layer>
         {tools.map((i) => {
           return shapes[i].map((j) => {

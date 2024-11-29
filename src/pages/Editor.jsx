@@ -1,18 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import UserPanel from "../components/UserPanel";
 import AlertMessage from "../components/AlertMessage";
 import Canvas from "../components/Canvas";
 import Tools from "../components/Tools";
+import jsPDF from "jspdf";
 
 export default function Editor() {
   const [show, setShow] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertVariant, setAlertVariant] = useState("light");
+  const stageRef = useRef(null);
 
-  useEffect(() => {
-    console.log(selectedId, "sel id");
-  }, [selectedId]);
+  const handleExportPDF = () => {
+    const stage = stageRef.current;
+    if (stage) {
+      const imageData = stage.toDataURL();
+      const pdf = new jsPDF();
+      pdf.addImage(imageData, "JPEG", 0, 0);
+      pdf.save("konva-canvas.pdf");
+    } else {
+      console.error("Stage is not ready yet.");
+    }
+  };
 
   const [shapes, setShapes] = useState({
     texts: [
@@ -147,12 +157,14 @@ export default function Editor() {
         addRect={addRect}
         addText={addText}
         changeColor={changeColor}
+        handleExportPDF={handleExportPDF}
       />
       <div className="d-flex">
         <Canvas
           className="w-50"
           shapes={shapes}
           setSelectedId={setSelectedId}
+          refer={stageRef}
         />
 
         <UserPanel
