@@ -12,9 +12,8 @@ const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
 
   return (
     // if present mode make these 100% and max zindex or smt else to overlay
-
     <Stage
-      width={window.innerWidth / 2}
+      width={window.innerWidth / 1.3333}
       height={window.innerHeight}
       ref={refer}
       scaleX={scale}
