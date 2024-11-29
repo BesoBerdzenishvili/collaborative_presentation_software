@@ -2,7 +2,7 @@ import React from "react";
 import { Stage, Layer } from "react-konva";
 import Shape from "./Shape";
 
-const Canvas = ({ shapes, setSelectedId, refer }) => {
+const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
   const tools = [...Object.keys(shapes)];
   // const [st, setSt] = useState({
   //   isDragging: false,
@@ -17,6 +17,8 @@ const Canvas = ({ shapes, setSelectedId, refer }) => {
       width={window.innerWidth / 2}
       height={window.innerHeight}
       ref={refer}
+      scaleX={scale}
+      scaleY={scale}
     >
       <Layer>
         {tools.map((i) => {

@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 
 export default function Editor() {
   const [show, setShow] = useState(false);
+  const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertVariant, setAlertVariant] = useState("light");
@@ -141,6 +142,14 @@ export default function Editor() {
     }));
   };
 
+  const handleZoomIn = () => {
+    setScale(scale + 0.1);
+  };
+
+  const handleZoomOut = () => {
+    setScale(Math.max(0.1, scale - 0.1));
+  };
+
   return (
     <div className="d-flex flex-column">
       {show && (
@@ -158,6 +167,8 @@ export default function Editor() {
         addText={addText}
         changeColor={changeColor}
         handleExportPDF={handleExportPDF}
+        handleZoomIn={handleZoomIn}
+        handleZoomOut={handleZoomOut}
       />
       <div className="d-flex">
         <Canvas
@@ -165,6 +176,7 @@ export default function Editor() {
           shapes={shapes}
           setSelectedId={setSelectedId}
           refer={stageRef}
+          scale={scale}
         />
 
         <UserPanel

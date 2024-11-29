@@ -8,6 +8,8 @@ const Tools = ({
   addText,
   changeColor,
   handleExportPDF,
+  handleZoomOut,
+  handleZoomIn,
 }) => {
   const renderTooltip = (message) => <Tooltip>{message}</Tooltip>;
   // remove comments
@@ -33,10 +35,14 @@ const Tools = ({
       {/* Zoom In/Out */}
       <div className="d-flex align-items-center">
         <OverlayTrigger placement="bottom" overlay={renderTooltip("Zoom In")}>
-          <button className="btn btn-secondary mx-1">+</button>
+          <button className="btn btn-secondary mx-1" onClick={handleZoomIn}>
+            +
+          </button>
         </OverlayTrigger>
         <OverlayTrigger placement="bottom" overlay={renderTooltip("Zoom Out")}>
-          <button className="btn btn-secondary mx-1">-</button>
+          <button className="btn btn-secondary mx-1" onClick={handleZoomOut}>
+            -
+          </button>
         </OverlayTrigger>
       </div>
 
