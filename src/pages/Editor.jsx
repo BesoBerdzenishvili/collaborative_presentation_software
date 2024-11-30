@@ -1,30 +1,19 @@
 import { useEffect, useState, useRef } from "react";
+import jsPDF from "jspdf";
 import UserPanel from "../components/UserPanel";
 import AlertMessage from "../components/AlertMessage";
 import Canvas from "../components/Canvas";
 import Tools from "../components/Tools";
-import jsPDF from "jspdf";
+import { socket } from "../../socket";
 
-export default function Editor() {
+export default function Editor({ userList, currentUser }) {
   const [show, setShow] = useState(false);
+  const [callServer, setCallServer] = useState(false);
   const [scale, setScale] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertVariant, setAlertVariant] = useState("light");
   const stageRef = useRef(null);
-
-  const handleExportPDF = () => {
-    const stage = stageRef.current;
-    if (stage) {
-      const imageData = stage.toDataURL();
-      const pdf = new jsPDF();
-      pdf.addImage(imageData, "JPEG", 0, 0);
-      pdf.save("konva-canvas.pdf");
-    } else {
-      console.error("Stage is not ready yet.");
-    }
-  };
-
   const [shapes, setShapes] = useState({
     texts: [
       {
@@ -67,13 +56,53 @@ export default function Editor() {
     ],
   });
 
+  useEffect(() => {
+    socket.on("shapes", (shapes) => {
+      setShapes(shapes);
+    });
+  });
+
+  useEffect(() => {
+    socket.emit("shapes", shapes);
+  }, [callServer]);
+
+  const callSocket = () => setCallServer(!callServer);
+
+  const handleDragMove = (id, type, newX, newY) => {
+    setShapes((prevShapes) => {
+      const updatePosition = (items) =>
+        items.map((item) =>
+          item.id === id ? { ...item, x: newX, y: newY } : item
+        );
+
+      return {
+        ...prevShapes,
+        [type]: updatePosition(prevShapes[type]),
+      };
+    });
+
+    callSocket();
+  };
+
+  const handleExportPDF = () => {
+    const stage = stageRef.current;
+    if (stage) {
+      const imageData = stage.toDataURL();
+      const pdf = new jsPDF();
+      pdf.addImage(imageData, "JPEG", 0, 0);
+      pdf.save("konva-canvas.pdf");
+    } else {
+      console.error("Stage is not ready yet.");
+    }
+  };
+
   const changeColor = (newFill) => {
     setShapes((prevShapes) => {
       const updateFill = (items) =>
         items.map((item) =>
           item.id === selectedId ? { ...item, fill: newFill } : item
         );
-
+      callSocket();
       return {
         ...prevShapes,
         texts: updateFill(prevShapes.texts),
@@ -97,6 +126,7 @@ export default function Editor() {
       ...prevShapes,
       texts: [...prevShapes.texts, newText],
     }));
+    callSocket();
   };
 
   const addRect = () => {
@@ -113,6 +143,7 @@ export default function Editor() {
       ...prevShapes,
       rects: [...prevShapes.rects, newRect],
     }));
+    callSocket();
   };
 
   const addCircle = () => {
@@ -127,6 +158,7 @@ export default function Editor() {
       ...prevShapes,
       circles: [...prevShapes.circles, newCircle],
     }));
+    callSocket();
   };
 
   const addStar = () => {
@@ -140,6 +172,7 @@ export default function Editor() {
       ...prevShapes,
       stars: [...prevShapes.stars, newStar],
     }));
+    callSocket();
   };
 
   const handleZoomIn = () => {
@@ -177,12 +210,15 @@ export default function Editor() {
           setSelectedId={setSelectedId}
           refer={stageRef}
           scale={scale}
+          handleDragMove={handleDragMove}
         />
 
         <UserPanel
           setShow={setShow}
           setAlertMessage={setAlertMessage}
           setAlertVariant={setAlertVariant}
+          userList={userList}
+          currentUser={currentUser}
         />
       </div>
     </div>

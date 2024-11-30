@@ -7,12 +7,15 @@ export default function UserPanel({
   setShow,
   setAlertMessage,
   setAlertVariant,
+  userList,
+  currentUser,
 }) {
   const reactNavigator = useNavigate();
   const { roomId } = useParams();
   const { search } = useLocation();
   const query = new URLSearchParams(search);
-  const username = query.get("username");
+  // const username = query.get("username");
+  // is query.get method removing username from url?
 
   const leaveRoom = () => {
     // if(!socket) return;
@@ -25,34 +28,18 @@ export default function UserPanel({
     setAlertMessage("Copied to clipboard!");
     setAlertVariant("success");
   };
-  const clients = [
-    "name 7",
-    "name 2",
-    "name 4",
-    "name 4",
-    "name 4",
-    "name 7",
-    "name 2",
-    "zb5lze5j",
-    "name 4",
-    "name 4",
-    "name 7",
-    "name 2",
-    "name 4",
-    "name 4",
-    "name 4",
-    "q",
-  ];
+  console.log(currentUser.name, "userList userPanel");
+
   return (
     <aside className="bg-primary w-25 px-3 clients-list d-flex flex-column justify-content-between overflow-auto">
       <div>
         <h3 className="sticky-top bg-primary py-3">Connected...</h3>
         <div className="d-flex flex-wrap my-4 ">
-          {clients.map((client, index) => (
+          {userList.map((user, index) => (
             <User
               key={index}
-              username={client}
-              isCurrent={client === username}
+              username={user.name}
+              isCurrent={user.name === currentUser.name}
             />
           ))}
         </div>

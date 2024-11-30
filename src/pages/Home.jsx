@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import AlertMessage from "../components/AlertMessage";
+import { socket } from "../../socket";
 
-const Home = () => {
+const Home = ({ userList, setUserList, setCurrentUser }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -15,11 +16,32 @@ const Home = () => {
     setShow(true);
   };
 
+  const addUserToList = (newUser) => {
+    setUserList([...userList, newUser]);
+    socket("userList", userList);
+  };
+
   const handleJoinRoom = () => {
     if (roomId && username) {
+      const newUser = {
+        name: username,
+        roomId: roomId,
+        status: userList.filter((i) => i.roomId == roomId).length
+          ? "viewer"
+          : "creator",
+      };
+      setCurrentUser(newUser);
       navigate(`/editor/${roomId}?username=${username}`);
     }
+    addUserToList(newUser);
   };
+
+  useEffect(() => {
+    socket.on("userList", (newUser) => {
+      setUserList([...userList, newUser]);
+    });
+    console.log(userList, "userList effect");
+  }, [userList]);
 
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">
