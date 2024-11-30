@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import AlertMessage from "../components/AlertMessage";
-import { socket } from "../../socket";
 import uniqid from "uniqid";
 
 const Home = ({ userList, setUserList, setCurrentUser }) => {

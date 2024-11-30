@@ -1,4 +1,3 @@
-import React from "react";
 import User from "./User";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";

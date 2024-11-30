@@ -1,4 +1,3 @@
-import React from "react";
 import { Star, Rect, Text, Circle } from "react-konva";
 
 export default function Shape({ shape, element, onMouseDown, ...restProps }) {
