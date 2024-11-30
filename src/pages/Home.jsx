@@ -21,7 +21,7 @@ const Home = ({ userList, setUserList, setCurrentUser }) => {
     socket("userList", userList);
   };
 
-  const handleJoinRoom = () => {
+  const handleJoinRoom = (e) => {
     if (roomId && username) {
       const newUser = {
         name: username,
@@ -31,6 +31,7 @@ const Home = ({ userList, setUserList, setCurrentUser }) => {
           : "creator",
       };
       setCurrentUser(newUser);
+      e.preventDefault();
       navigate(`/editor/${roomId}?username=${username}`);
     }
     addUserToList(newUser);
