@@ -18,7 +18,7 @@ export default function UserPanel({
   // is query.get method removing username from url?
 
   const leaveRoom = () => {
-    // if(!socket) return;
+    // if(!socket) return
     // socket.emit('leave-room', { roomId, username });
     reactNavigator("/");
   };
