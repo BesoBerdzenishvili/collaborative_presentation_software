@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import AlertMessage from "../components/AlertMessage";
 import { socket } from "../../socket";
+import uniqid from "uniqid";
 
 const Home = ({ userList, setUserList, setCurrentUser }) => {
   const navigate = useNavigate();
@@ -18,12 +19,12 @@ const Home = ({ userList, setUserList, setCurrentUser }) => {
 
   const addUserToList = (newUser) => {
     setUserList([...userList, newUser]);
-    socket("userList", userList);
   };
 
   const handleJoinRoom = (e) => {
     if (roomId && username) {
       const newUser = {
+        id: uniqid(),
         name: username,
         roomId: roomId,
         status: userList.filter((i) => i.roomId == roomId).length
@@ -31,18 +32,11 @@ const Home = ({ userList, setUserList, setCurrentUser }) => {
           : "creator",
       };
       setCurrentUser(newUser);
+      addUserToList(newUser);
       e.preventDefault();
       navigate(`/editor/${roomId}?username=${username}`);
     }
-    addUserToList(newUser);
   };
-
-  useEffect(() => {
-    socket.on("userList", (newUser) => {
-      setUserList([...userList, newUser]);
-    });
-    console.log(userList, "userList effect");
-  }, [userList]);
 
   return (
     <div className="bg-primary position-absolute top-50 start-50 translate-middle p-3 rounded-3">

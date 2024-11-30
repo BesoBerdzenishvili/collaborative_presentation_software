@@ -6,7 +6,7 @@ import Canvas from "../components/Canvas";
 import Tools from "../components/Tools";
 import { socket } from "../../socket";
 
-export default function Editor({ userList, currentUser }) {
+export default function Editor({ userList, currentUser, setUserList }) {
   const [show, setShow] = useState(false);
   const [callServer, setCallServer] = useState(false);
   const [scale, setScale] = useState(1);
@@ -193,16 +193,18 @@ export default function Editor({ userList, currentUser }) {
           variant={alertVariant}
         />
       )}
-      <Tools
-        addStar={addStar}
-        addCircle={addCircle}
-        addRect={addRect}
-        addText={addText}
-        changeColor={changeColor}
-        handleExportPDF={handleExportPDF}
-        handleZoomIn={handleZoomIn}
-        handleZoomOut={handleZoomOut}
-      />
+      {currentUser.status != "viewer" && (
+        <Tools
+          addStar={addStar}
+          addCircle={addCircle}
+          addRect={addRect}
+          addText={addText}
+          changeColor={changeColor}
+          handleExportPDF={handleExportPDF}
+          handleZoomIn={handleZoomIn}
+          handleZoomOut={handleZoomOut}
+        />
+      )}
       <div className="d-flex">
         <Canvas
           className="w-50"
@@ -219,6 +221,7 @@ export default function Editor({ userList, currentUser }) {
           setAlertVariant={setAlertVariant}
           userList={userList}
           currentUser={currentUser}
+          setUserList={setUserList}
         />
       </div>
     </div>
