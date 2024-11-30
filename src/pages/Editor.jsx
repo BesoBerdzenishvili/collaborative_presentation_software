@@ -5,6 +5,7 @@ import AlertMessage from "../components/AlertMessage";
 import Canvas from "../components/Canvas";
 import Tools from "../components/Tools";
 import { socket } from "../../socket";
+import uniqid from "uniqid";
 
 export default function Editor({ userList, currentUser, setUserList }) {
   const [show, setShow] = useState(false);
@@ -15,45 +16,10 @@ export default function Editor({ userList, currentUser, setUserList }) {
   const [alertVariant, setAlertVariant] = useState("light");
   const stageRef = useRef(null);
   const [shapes, setShapes] = useState({
-    texts: [
-      {
-        id: "123",
-        text: "test",
-        x: 400,
-        y: 400,
-        fill: "green",
-        fontSize: 24,
-      },
-    ],
-    rects: [
-      {
-        id: "1",
-        x: 20,
-        y: 50,
-        width: 100,
-        height: 100,
-        fill: "red",
-        shadowBlur: 10,
-      },
-      {
-        id: "3",
-        x: 50,
-        y: 190,
-        width: 100,
-        height: 100,
-        fill: "#fff",
-        shadowBlur: 10,
-      },
-    ],
-    circles: [{ id: "2", x: 200, y: 100, radius: 50, fill: "green" }],
-    stars: [
-      {
-        id: "4",
-        fill: "orange",
-        x: 300,
-        y: 300,
-      },
-    ],
+    texts: [],
+    rects: [],
+    circles: [],
+    stars: [],
   });
 
   useEffect(() => {
@@ -115,7 +81,7 @@ export default function Editor({ userList, currentUser, setUserList }) {
 
   const addText = () => {
     const newText = {
-      id: Math.random(),
+      id: uniqid(),
       text: "New Text",
       x: 400,
       y: 400,
@@ -131,7 +97,7 @@ export default function Editor({ userList, currentUser, setUserList }) {
 
   const addRect = () => {
     const newRect = {
-      id: Math.random(),
+      id: uniqid(),
       x: 20,
       y: 50,
       width: 100,
@@ -148,7 +114,7 @@ export default function Editor({ userList, currentUser, setUserList }) {
 
   const addCircle = () => {
     const newCircle = {
-      id: Math.random(),
+      id: uniqid(),
       x: 200,
       y: 100,
       radius: 50,
@@ -163,7 +129,7 @@ export default function Editor({ userList, currentUser, setUserList }) {
 
   const addStar = () => {
     const newStar = {
-      id: "4",
+      id: uniqid(),
       fill: "orange",
       x: 300,
       y: 300,

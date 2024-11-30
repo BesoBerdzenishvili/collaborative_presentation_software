@@ -18,9 +18,6 @@ const App = () => {
     localStorage.setItem("userList", JSON.stringify(userList));
   }, [currentUser, userList]);
 
-  useEffect(() => {
-    console.log(userList, "c u eff List");
-  }, [userList]);
   return (
     <Router>
       <Routes>
