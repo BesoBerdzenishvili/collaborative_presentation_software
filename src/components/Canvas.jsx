@@ -1,8 +1,7 @@
-import React from "react";
 import { Stage, Layer } from "react-konva";
 import Shape from "./Shape";
 
-const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
+const Canvas = ({ shapes, setSelectedId, refer, scale, handleDragMove }) => {
   const tools = [...Object.keys(shapes)];
 
   return (
@@ -26,6 +25,9 @@ const Canvas = ({ shapes, setSelectedId, refer, scale }) => {
                 y={j.y}
                 fill={j.fill}
                 draggable
+                onDragEnd={(e) =>
+                  handleDragMove(j.id, i, e.target.x(), e.target.y())
+                }
               />
             );
           });

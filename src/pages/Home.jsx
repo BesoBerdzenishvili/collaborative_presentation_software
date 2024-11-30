@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import AlertMessage from "../components/AlertMessage";
+import uniqid from "uniqid";
 
-const Home = () => {
+const Home = ({ userList, setUserList, setCurrentUser }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -15,8 +16,23 @@ const Home = () => {
     setShow(true);
   };
 
-  const handleJoinRoom = () => {
+  const addUserToList = (newUser) => {
+    setUserList([...userList, newUser]);
+  };
+
+  const handleJoinRoom = (e) => {
     if (roomId && username) {
+      const newUser = {
+        id: uniqid(),
+        name: username,
+        roomId: roomId,
+        status: userList.filter((i) => i.roomId == roomId).length
+          ? "viewer"
+          : "creator",
+      };
+      setCurrentUser(newUser);
+      addUserToList(newUser);
+      e.preventDefault();
       navigate(`/editor/${roomId}?username=${username}`);
     }
   };
